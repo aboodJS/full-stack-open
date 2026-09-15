@@ -17,21 +17,25 @@ const Part = (props) => {
 };
 
 const Content = (props) => {
+  const data = props.data.map((e) => (
+    <Part part={e.name} number={e.exercises}></Part>
+  ));
   return (
     <>
-      <div>
-        <Part part={props.parts[0]} number={props.numbers[0]}></Part>
-        <Part part={props.parts[1]} number={props.numbers[1]}></Part>
-        <Part part={props.parts[2]} number={props.numbers[2]}></Part>
-      </div>
+      <div>{data}</div>
     </>
   );
 };
 
 const Total = (props) => {
+  const nums = [];
+  props.data.map((e) => nums.push(e.exercises));
+  console.log(nums);
+  const Total = nums.reduce((e, em) => e + em, 0);
+  console.log(Total);
   return (
     <>
-      <p>Number of exercises {props.total}</p>
+      <p>Number of exercises {Total}</p>
     </>
   );
 };
@@ -56,14 +60,9 @@ const App = () => {
   return (
     <div>
       <Header course={course}></Header>
-      <Content
-        parts={[parts[0].name, parts[1].name, parts[2].name]}
-        numbers={[parts[0].exercises, parts[1].exercises, parts[2].exercises]}
-      ></Content>
+      <Content data={parts}></Content>
 
-      <Total
-        total={parts[0].exercises + parts[1].exercises + parts[2].exercises}
-      ></Total>
+      <Total data={parts}></Total>
     </div>
   );
 };
